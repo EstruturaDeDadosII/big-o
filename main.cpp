@@ -113,7 +113,6 @@ int buscaBinaria(int vetor[TAM], int valorProcurado, int *posicaoEncontrada) {
 
 void quickSort(int vetor[], int inicio, int fim) {
 
-
     imprimeVetor(vetor);
 
     int pivo, esquerda, direita, meio, aux;
