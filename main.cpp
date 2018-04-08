@@ -14,7 +14,7 @@ void complexidadeON3();
 
 void imprimeVetor(int vetor[]);
 int buscaBinaria(int vetor[TAM], int valorProcurado, int *posicaoEncontrada);
-void bubbleSort(int vetor[]);
+void quickSort(int vetor[], int inicio, int fim);
 
 typedef struct pessoa {
     string nome;
@@ -87,7 +87,7 @@ void complexidadeOLogN() {
 void complexidadeNLogN() {
     cout << "\n\n---------------\n\n" << "Complexidade NLog(N)" << endl << endl;
     int vetor[TAM] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-    bubbleSort(vetor);
+    quickSort(vetor, 0, TAM);
     imprimeVetor(vetor);
 }
 
@@ -111,18 +111,51 @@ int buscaBinaria(int vetor[TAM], int valorProcurado, int *posicaoEncontrada) {
     return -1;
 }
 
-void bubbleSort(int vetor[]) {
-    int i, j, aux;
-    for (i = 0; i < TAM; ++i) {
-        for (j = i + 1; j < TAM; ++j) {
-            if (vetor[i] > vetor[j]) {
-                aux = vetor[i];
-                vetor[i] = vetor[j];
-                vetor[j] = aux;
-            }
+void quickSort(int vetor[], int inicio, int fim) {
+
+
+    imprimeVetor(vetor);
+
+    int pivo, esquerda, direita, meio, aux;
+    esquerda = inicio;
+    direita = fim;
+
+    meio = (int) ( (esquerda + direita) / 2 );
+    pivo = vetor[meio];
+
+    while (direita > esquerda) {
+
+        while ( vetor[esquerda] < pivo ) {
+            direita += 1;
+        }
+
+        while ( vetor[direita] > pivo ) {
+            direita -= 1;
+        }
+
+        if (esquerda <= direita) {
+
+            //realiza uma troca porque os dados se cruzaram
+            aux = vetor[esquerda];
+            vetor[esquerda] = vetor[direita];
+            vetor[direita] = aux;
+
+            //limites caminhando para o centro
+            esquerda += 1;
+            direita -= 1;
+
         }
     }
-    imprimeVetor(vetor);
+
+    //analisando posições para continuar ordenando
+    if (inicio < direita) {
+        quickSort(vetor, inicio, direita);
+    }
+
+    if (esquerda < fim) {
+        quickSort(vetor, esquerda, fim);
+    }
+
 }
 
 void complexidadeON2() {
